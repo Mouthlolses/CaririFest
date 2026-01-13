@@ -46,6 +46,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.caririfest.admin.model.register.AdminCreateRequest
 
 
@@ -55,7 +56,7 @@ fun ProducerCreateAccountScreen(
     viewModel: ProducerCreateViewModel = hiltViewModel()
 ) {
 
-    val uiState by viewModel.uiSate.collectAsState()
+    val uiState by viewModel.uiSate.collectAsStateWithLifecycle()
 
     var adminName by remember { mutableStateOf("") }
     var adminLastName by remember { mutableStateOf("") }

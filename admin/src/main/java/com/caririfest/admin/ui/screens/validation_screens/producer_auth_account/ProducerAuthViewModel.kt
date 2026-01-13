@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,20 +27,16 @@ class ProducerAuthViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            authPrefs.adminName.collect { name ->
-                _uiState.value = _uiState.value.copy(
-                    adminName = name ?: ""
-                )
-            }
-        }
-    }
-
-    init {
-        viewModelScope.launch {
-            authPrefs.adminEmail.collect { email ->
-                _uiState.value = _uiState.value.copy(
+            combine(
+                authPrefs.adminName,
+                authPrefs.adminEmail
+            ) { name, email ->
+                _uiState.value.copy(
+                    adminName = name ?: "",
                     adminEmail = email ?: ""
                 )
+            }.collect { newState ->
+                _uiState.value = newState
             }
         }
     }
