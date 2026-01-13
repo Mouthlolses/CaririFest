@@ -25,10 +25,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -56,7 +58,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.caririfest.app.R
 import com.caririfest.app.font.poppinsFamily
 import com.caririfest.app.font.robotoFamily
@@ -240,14 +242,28 @@ fun NewsScreenLayout(
                                             .padding(bottom = 16.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
-                                        AsyncImage(
+                                        SubcomposeAsyncImage(
                                             model = event.fields.img.stringValue,
                                             contentDescription = stringResource(R.string.imageEvents),
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .height(200.dp)
                                                 .clip(RoundedCornerShape(16.dp)),
-                                            contentScale = ContentScale.Crop
+                                            contentScale = ContentScale.Crop,
+                                            loading = {
+                                                Box(
+                                                    modifier = Modifier.fillMaxSize(),
+                                                    contentAlignment = Alignment.Center
+                                                ) {
+                                                    CircularProgressIndicator(strokeWidth = 2.dp)
+                                                }
+                                            },
+                                            error = {
+                                                Icon(
+                                                    imageVector = Icons.Default.BrokenImage,
+                                                    contentDescription = null
+                                                )
+                                            }
                                         )
                                         Spacer(modifier = Modifier.height(12.dp))
                                         Text(
@@ -384,14 +400,28 @@ fun NewsScreenLayout(
                                         .height(200.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    AsyncImage(
+                                    SubcomposeAsyncImage(
                                         model = doc.fields.img.stringValue,
                                         contentDescription = stringResource(R.string.imageEvents),
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .height(200.dp)
                                             .clip(RoundedCornerShape(16.dp)),
-                                        contentScale = ContentScale.Crop
+                                        contentScale = ContentScale.Crop,
+                                        loading = {
+                                            Box(
+                                                modifier = Modifier.fillMaxSize(),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                CircularProgressIndicator(strokeWidth = 2.dp)
+                                            }
+                                        },
+                                        error = {
+                                            Icon(
+                                                imageVector = Icons.Default.BrokenImage,
+                                                contentDescription = null
+                                            )
+                                        }
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(14.dp))
