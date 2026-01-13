@@ -38,7 +38,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -55,6 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.caririfest.app.R
@@ -74,7 +74,7 @@ fun NewsScreenLayout(
     viewModel: NewsViewModel = hiltViewModel(),
     recentEventViewModel: RecentEventViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.events.collectAsState()
+    val uiState by viewModel.events.collectAsStateWithLifecycle()
     val uiStateHotFilter = uiState.events.filter { it.fields.hot.booleanValue }
     val pagerState = rememberPagerState(pageCount = { uiStateHotFilter.size })
     val scope = rememberCoroutineScope()

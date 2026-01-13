@@ -170,6 +170,9 @@ fun NewsDetailsLayout(
                 )
 
                 ShareButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .offset(y = 24.dp),
                     onClick = {
                         scope.launch {
                             val text = buildString {
@@ -204,10 +207,7 @@ fun NewsDetailsLayout(
                             }
 
                         }
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .offset(y = 24.dp)
+                    }
                 )
             }
 
@@ -318,7 +318,8 @@ fun NewsDetailsLayout(
                     state = listState,
                     modifier = Modifier
                         .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    userScrollEnabled = false
                 ) {
                     items(tagList) { isFavorite ->
                         Tag(

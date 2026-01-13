@@ -29,9 +29,9 @@ import com.caririfest.app.R
 @Preview()
 @Composable
 fun CategoryCard(
+    modifier: Modifier = Modifier,
     icon: Int = R.drawable.caririfestlogo1,
     title: String = "title",
-    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(

@@ -18,13 +18,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.caririfest.app.R
+import com.caririfest.app.font.interFamily
+import com.caririfest.app.font.montserratFamily
+import com.caririfest.app.font.poppinsFamily
+import com.caririfest.app.font.robotoFamily
 
 
 @Preview
 @Composable
 fun ShareButton(
-    onClick: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
 ) {
     Button(
         onClick = onClick,
@@ -41,7 +45,7 @@ fun ShareButton(
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
     ) {
         Icon(
-           painter = painterResource(R.drawable.ic_share_windows),
+            painter = painterResource(R.drawable.ic_share_windows),
             contentDescription = "Compartilhar",
             tint = Color(0xFFFF5733),
             modifier = Modifier.size(20.dp)
