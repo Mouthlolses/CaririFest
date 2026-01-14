@@ -20,13 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.caririfest.app.R
+import com.caririfest.app.font.pressStart
 
 
 @Preview
 @Composable
 fun Tag(
-    text: String = "Disponível",
     modifier: Modifier = Modifier,
+    text: String = "Disponível",
     backgroundColor: Color = Color(0xFF4CAF50),
     painter: Painter = painterResource(R.drawable.icon_ticket3)
 ) {

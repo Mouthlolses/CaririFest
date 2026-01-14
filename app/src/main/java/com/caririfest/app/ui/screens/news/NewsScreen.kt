@@ -139,14 +139,15 @@ fun NewsScreenLayout(
                         title = {
                             Text(
                                 text = "O que vai ser hoje?",
-                                fontFamily = poppinsFamily
+                                fontFamily = poppinsFamily,
+                                fontWeight = FontWeight.Bold
                             )
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = Color.Transparent,
                             scrolledContainerColor = Color.Transparent,
                             navigationIconContentColor = Color.Transparent,
-                            titleContentColor = Color.DarkGray,
+                            titleContentColor = Color.White,
                             actionIconContentColor = Color.Transparent,
                             subtitleContentColor = Color.Black,
                         ),
@@ -156,8 +157,8 @@ fun NewsScreenLayout(
                             .background(
                                 Brush.verticalGradient(
                                     colors = listOf(
-                                        Color(0xFFFF9800),
-                                        Color(0xFFFFEA00)
+                                        Color(0xFFFFEA00),
+                                        Color(0xFFFF9800)
                                     )
                                 )
                             )

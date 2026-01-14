@@ -111,17 +111,6 @@ fun HomeScreenLayout(
     ) {
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Descubra",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp),
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                fontSize = 26.sp,
-                color = Color.Black
-            )
             LazyRow(
                 modifier = Modifier,
             ) {
