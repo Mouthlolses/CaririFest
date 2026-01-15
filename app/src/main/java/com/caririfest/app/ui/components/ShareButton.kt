@@ -48,7 +48,7 @@ fun ShareButton(
             painter = painterResource(R.drawable.ic_share_windows),
             contentDescription = "Compartilhar",
             tint = Color(0xFFFF5733),
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(26.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(

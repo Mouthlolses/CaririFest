@@ -5,7 +5,7 @@
 
     <!--bottomNavigationBar-->
     <string name="news">Agora</string>
-    <string name="home">Explorar</string>
+    <string name="home">Home</string>
     <string name="search">Descubra</string>
     <string name="favorites">Ofertas</string>
 

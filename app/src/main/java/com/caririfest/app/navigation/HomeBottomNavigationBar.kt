@@ -67,10 +67,10 @@ enum class NavItems(
     val icon: Int,
     val route: String
 ) {
-    NEWS(R.string.news, R.drawable.ic_action_newst, "news"),
-    HOME(R.string.home, R.drawable.ic_icon_regionalnews, "home"),
-    SEARCH(R.string.search, R.drawable.ic_icon_mapsearch, "search"),
-    OFFER(R.string.favorites, R.drawable.ic_action_sell, "offer")
+    NEWS(R.string.news, R.drawable.icon_celebration, "news"),
+    HOME(R.string.home, R.drawable.icon_home, "home"),
+    SEARCH(R.string.search, R.drawable.icon_maps, "search"),
+    OFFER(R.string.favorites, R.drawable.icon_special_offer, "offer")
 
 }
 
@@ -255,22 +255,22 @@ fun BottomNavigationBar(navController: NavHostController) {
                                     fadeOut(animationSpec = tween(200))
                         }, label = ""
                     ) {
-                        if (it) {
+                        if (!it) {
                             Text(
                                 item.label,
                                 fontFamily = poppinsFamily,
-                                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
+                                fontWeight = FontWeight.Medium,
                                 fontSize = 12.sp
                             )
                         }
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color.Black,
+                    selectedIconColor = Color(0xFFFF9800),
                     selectedTextColor = Color.Black,
-                    unselectedIconColor = Color.Gray,
-                    unselectedTextColor = Color.Gray,
-                    indicatorColor = Color(0xFF8C4A2F).copy(alpha = 0.12f)
+                    unselectedIconColor = Color.Black,
+                    unselectedTextColor = Color.Black,
+                    indicatorColor = Color(0xFFFF9800).copy(alpha = 0.2f)
                 )
             )
         }
