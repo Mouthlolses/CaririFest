@@ -67,10 +67,10 @@ enum class NavItems(
     val icon: Int,
     val route: String
 ) {
-    NEWS(R.string.news, R.drawable.icon_celebration, "news"),
-    HOME(R.string.home, R.drawable.icon_home, "home"),
-    SEARCH(R.string.search, R.drawable.icon_maps, "search"),
-    OFFER(R.string.favorites, R.drawable.icon_special_offer, "offer")
+    NEWS(R.string.news, R.drawable.icon_bold_celebration, "news"),
+    HOME(R.string.home, R.drawable.icon_myhome, "home"),
+    SEARCH(R.string.search, R.drawable.icon_my_map, "search"),
+    OFFER(R.string.favorites, R.drawable.icon_world, "offer")
 
 }
 
@@ -244,7 +244,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                     Icon(
                         painter = painterResource(id = item.icon),
                         contentDescription = item.label,
-                        modifier = Modifier.size(27.dp)
+                        modifier = Modifier.size(24.dp)
                     )
                 },
                 label = {
