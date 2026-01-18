@@ -41,7 +41,6 @@ import com.caririfest.app.ui.screens.home.CityLocation
 fun DetailsScreen(
     city: CityLocation,
 ) {
-
     var progress by remember { mutableIntStateOf(0) }
     var hasError by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }

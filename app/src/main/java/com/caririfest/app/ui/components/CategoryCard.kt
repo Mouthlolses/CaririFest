@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -36,8 +37,7 @@ fun CategoryCard(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)
+            .width(150.dp)
             .size(130.dp)
             .clickable(enabled = false, onClick = onClick),
         shape = RoundedCornerShape(12.dp),

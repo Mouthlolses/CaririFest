@@ -54,25 +54,28 @@ android {
 dependencies {
 
 
-    implementation(project(":core:network"))
 
+    //datastore
     implementation(libs.androidx.datastore.preferences)
 
+    //Upload images - Coil
     implementation(libs.coil.compose)
 
+    //Retrofit/okHttp - HTTP Requests
     implementation(libs.retrofit)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-
     implementation(libs.converter.gson)
-
     implementation(libs.gson)
 
+    //Dependency Injection - Hilt/Dagger
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
+
+    implementation(project(":core:network"))
 
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.core.ktx)

@@ -35,7 +35,6 @@ fun SearchBarWithSuggestions(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    // Expande quando há sugestões
     LaunchedEffect(suggestions) {
         expanded = suggestions.isNotEmpty()
     }
@@ -67,8 +66,8 @@ fun SearchBarWithSuggestions(
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-           modifier = Modifier
-               .background(Color.White)
+            modifier = Modifier
+                .background(Color.White)
         ) {
             suggestions.forEach { suggestion ->
                 DropdownMenuItem(

@@ -56,11 +56,11 @@ val franOne = FontFamily(
 )
 
 val fugOne = FontFamily(
-    Font(R.font.fugaz_one, FontWeight.Normal) // V
+    Font(R.font.fugaz_one, FontWeight.Normal)//V
 )
 
 val permanentMarker = FontFamily(
-    Font(R.font.permanent_marker, FontWeight.Normal)
+    Font(R.font.permanent_marker, FontWeight.Normal)//V
 )
 
 val pressStart = FontFamily(
@@ -68,7 +68,7 @@ val pressStart = FontFamily(
 )
 
 val ratoOne = FontFamily(
-    Font(R.font.rammetto_one, FontWeight.Normal) // V
+    Font(R.font.rammetto_one, FontWeight.Normal)
 )
 
 val rubik = FontFamily(

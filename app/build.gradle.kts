@@ -56,19 +56,21 @@ android {
 
 dependencies {
 
-    //permission
-    implementation(libs.accompanist.permissions)
-
-    //stripe
-    implementation(libs.stripe.android)
-
-    //abacatePay
-    implementation(libs.abacatepay.kotlin.sdk)
-
-    //firebase
-    implementation(platform(libs.firebase.bom.v3222))
+    //observability - Firebase
     implementation(libs.firebase.crashlytics.ndk)
     implementation(libs.google.firebase.analytics)
+
+    //firebaseBom
+    implementation(platform(libs.firebase.bom.v3222))
+
+    //Payment - stripe
+    implementation(libs.stripe.android)
+
+    //Payment - abacatePay
+    implementation(libs.abacatepay.kotlin.sdk)
+
+    //permission
+    implementation(libs.accompanist.permissions)
 
     //datastore
     implementation(libs.androidx.datastore.preferences)
@@ -83,49 +85,55 @@ dependencies {
     implementation(libs.offline.ndk27)
     implementation(libs.mapbox.search.android.ndk27)
     implementation(libs.mapbox.search.android.ui.ndk27)
-
-
-    //módulo core-network
-    implementation(project(":core:network"))
-    //módulo core-data
-    implementation(project(":core:data"))
-
     implementation(libs.android.sdk)
+
 
     //WorkManager
     implementation(libs.androidx.work.runtime.ktx)
+
     //GCMNetworkManager support
     implementation(libs.androidx.work.gcm)
     implementation(libs.places)
+
     // optional - Test helpers
     androidTestImplementation(libs.androidx.work.testing)
+
     // optional - Multiprocess support
     implementation(libs.androidx.work.multiprocess)
 
 
+    //ORM - Room - SQLite
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.rxjava3)
 
+    //Dependency Injection - Hilt/Dagger
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
 
+    //Upload images - Coil
+    implementation(libs.coil.compose)
+
+    //Jetpack Compose
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    implementation(project(":core:network"))
+    implementation(project(":core:data"))
+
     implementation(libs.androidx.foundation)
     implementation(libs.material3)
     implementation(libs.androidx.animation)
-    implementation(libs.coil.compose)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.compose.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

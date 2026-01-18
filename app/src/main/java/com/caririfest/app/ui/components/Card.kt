@@ -35,7 +35,7 @@ import com.caririfest.app.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EventCard(
+fun Card(
     modifier: Modifier,
     @DrawableRes img: Int,
     title: String,
@@ -102,7 +102,7 @@ fun EventCard(
 @Preview
 @Composable
 fun CardPreview() {
-    EventCard(
+    Card(
         modifier = Modifier,
         img = R.drawable.person_2,
         title = "DJ Night Hawa",

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -29,13 +30,12 @@ import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -60,10 +60,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.SubcomposeAsyncImage
 import com.caririfest.app.R
+import com.caririfest.app.font.permanentMarker
 import com.caririfest.app.font.poppinsFamily
 import com.caririfest.app.font.robotoFamily
+import com.caririfest.app.ui.components.EventCard
 import com.caririfest.app.ui.components.LoadingIndicatorLayout
-import com.caririfest.app.ui.components.Tag
 import com.caririfest.app.ui.screens.home.RecentEventViewModel
 import com.caririfest.data.datasource.model.EventEntity
 import kotlinx.coroutines.delay
@@ -80,7 +81,6 @@ fun NewsScreenLayout(
     val uiStateHotFilter = uiState.events.filter { it.fields.hot.booleanValue }
     val pagerState = rememberPagerState(pageCount = { uiStateHotFilter.size })
     val scope = rememberCoroutineScope()
-
 
     LaunchedEffect(
         pagerState.isScrollInProgress
@@ -180,10 +180,10 @@ fun NewsScreenLayout(
                         ) {
                             Text(
                                 text = "Imperdíveis",
-                                fontFamily = robotoFamily,
+                                fontFamily = permanentMarker,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 24.sp,
-                                color = Color(0xFF565555),
+                                color = Color(0xFF1F2937),
                                 modifier = Modifier
                                     .padding(start = 12.dp, top = 12.dp, bottom = 8.dp)
                             )
@@ -342,29 +342,42 @@ fun NewsScreenLayout(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(horizontal = 18.dp)
+                                .padding(top = 18.dp, bottom = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 text = "Em Alta",
-                                fontFamily = robotoFamily,
+                                fontFamily = permanentMarker,
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                color = Color(0xFF565555),
-                                modifier = Modifier
-                                    .padding(start = 12.dp, top = 16.dp)
+                                fontSize = 18.sp,
+                                color = Color(0xFF1F2937),
+                                modifier = Modifier.weight(1f)
                             )
+                            TextButton(
+                                onClick = {},
+                                contentPadding = PaddingValues(0.dp)
+                            ) {
+                                Text(
+                                    text = "Ver tudo",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = Color(0xFF2563EB)
+                                )
+                            }
                         }
                     }
-                    items(uiState.events) { doc ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 12.dp,
-                                    bottom = 16.dp
-                                )
-                                .clickable(
+                    item {
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(uiState.events) { doc ->
+                                EventCard(
+                                    imageUrl = doc.fields.img.stringValue,
+                                    title = doc.fields.title.stringValue,
+                                    location = doc.fields.location.stringValue,
+                                    date = doc.fields.date.stringValue,
                                     onClick = {
                                         recentEventViewModel.onEventOpened(
                                             EventEntity(
@@ -382,111 +395,8 @@ fun NewsScreenLayout(
                                             )
                                         )
                                         navController.navigate("newsDetailsScreen/${doc.id}")
-                                    },
-                                    enabled = true,
-                                ),
-                            colors = CardDefaults.cardColors(
-                                containerColor = Color.White
-                            ),
-                            shape = RoundedCornerShape(16.dp),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
-                        ) {
-                            Column(
-                                Modifier
-                                    .fillMaxWidth()
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(200.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    SubcomposeAsyncImage(
-                                        model = doc.fields.img.stringValue,
-                                        contentDescription = stringResource(R.string.imageEvents),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(200.dp)
-                                            .clip(RoundedCornerShape(16.dp)),
-                                        contentScale = ContentScale.Crop,
-                                        loading = {
-                                            Box(
-                                                modifier = Modifier.fillMaxSize(),
-                                                contentAlignment = Alignment.Center
-                                            ) {
-                                                CircularProgressIndicator(strokeWidth = 2.dp)
-                                            }
-                                        },
-                                        error = {
-                                            Icon(
-                                                imageVector = Icons.Default.BrokenImage,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(14.dp))
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Column(
-                                        modifier = Modifier.weight(1f)
-                                    ) {
-                                        Text(
-                                            text = doc.fields.title.stringValue,
-                                            fontFamily = poppinsFamily,
-                                            fontWeight = FontWeight.Bold,
-                                            color = Color.Black
-                                        )
-
-                                        Spacer(modifier = Modifier.height(14.dp))
-
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            Icon(
-                                                imageVector = Icons.Default.DateRange,
-                                                contentDescription = stringResource(R.string.date),
-                                                tint = Color.DarkGray,
-                                                modifier = Modifier.size(18.dp)
-                                            )
-                                            Spacer(modifier = Modifier.width(4.dp))
-                                            Text(
-                                                text = doc.fields.date.stringValue,
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = Color.Gray
-                                            )
-                                        }
-                                        Spacer(modifier = Modifier.height(8.dp))
-
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            Icon(
-                                                imageVector = Icons.Default.Place,
-                                                contentDescription = stringResource(R.string.location),
-                                                tint = Color.Red,
-                                                modifier = Modifier.size(18.dp)
-                                            )
-                                            Spacer(modifier = Modifier.width(2.dp))
-                                            Text(
-                                                text = doc.fields.location.stringValue,
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = Color.Gray
-                                            )
-                                        }
                                     }
-                                    val isFavorite = doc.fields.favorite.booleanValue
-                                    Tag(
-                                        text =
-                                            if (isFavorite)
-                                                stringResource(R.string.available)
-                                            else
-                                                stringResource(R.string.exhausted),
-                                        backgroundColor = if (isFavorite) Color(0xFF4CAF50) else Color(
-                                            0xFF9E9E9E
-                                        )
-                                    )
-                                }
+                                )
                             }
                         }
                     }
