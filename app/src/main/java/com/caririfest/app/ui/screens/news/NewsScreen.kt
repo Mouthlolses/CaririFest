@@ -63,9 +63,9 @@ import com.caririfest.app.R
 import com.caririfest.app.font.permanentMarker
 import com.caririfest.app.font.poppinsFamily
 import com.caririfest.app.font.robotoFamily
+import com.caririfest.app.ui.components.CategoryCard
 import com.caririfest.app.ui.components.EventCard
 import com.caririfest.app.ui.components.LoadingIndicatorLayout
-import com.caririfest.app.ui.screens.home.RecentEventViewModel
 import com.caririfest.data.datasource.model.EventEntity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -74,13 +74,18 @@ import kotlinx.coroutines.launch
 @Composable
 fun NewsScreenLayout(
     navController: NavHostController,
-    viewModel: NewsViewModel = hiltViewModel(),
-    recentEventViewModel: RecentEventViewModel = hiltViewModel()
+    viewModel: NewsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.events.collectAsStateWithLifecycle()
+    val categories by viewModel.categories.collectAsStateWithLifecycle()
+    val recentEvents by viewModel.recentEvents.collectAsStateWithLifecycle()
     val uiStateHotFilter = uiState.events.filter { it.fields.hot.booleanValue }
     val pagerState = rememberPagerState(pageCount = { uiStateHotFilter.size })
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadEvents()
+    }
 
     LaunchedEffect(
         pagerState.isScrollInProgress
@@ -181,7 +186,7 @@ fun NewsScreenLayout(
                             Text(
                                 text = "Imperdíveis",
                                 fontFamily = permanentMarker,
-                                fontWeight = FontWeight.Bold,
+                                fontWeight = FontWeight.Medium,
                                 fontSize = 24.sp,
                                 color = Color(0xFF1F2937),
                                 modifier = Modifier
@@ -210,7 +215,7 @@ fun NewsScreenLayout(
                                         .fillMaxWidth()
                                         .clickable(
                                             onClick = {
-                                                recentEventViewModel.onEventOpened(
+                                                viewModel.onEventOpened(
                                                     EventEntity(
                                                         id = event.id,
                                                         title = event.fields.title.stringValue,
@@ -339,18 +344,19 @@ fun NewsScreenLayout(
                         }
                     }
                     item {
+                        Spacer(modifier = Modifier.padding(vertical = 4.dp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 18.dp)
-                                .padding(top = 18.dp, bottom = 2.dp),
+                                .padding(top = 18.dp, bottom = 4.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Em Alta",
+                                text = "Categorias",
                                 fontFamily = permanentMarker,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 22.sp,
                                 color = Color(0xFF1F2937),
                                 modifier = Modifier.weight(1f)
                             )
@@ -366,8 +372,47 @@ fun NewsScreenLayout(
                                 )
                             }
                         }
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(categories) { value ->
+                                CategoryCard(
+                                    icon = value.image,
+                                    title = value.nameCategories
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.padding(vertical = 4.dp))
                     }
                     item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 18.dp)
+                                .padding(top = 18.dp, bottom = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Em Alta",
+                                fontFamily = permanentMarker,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 22.sp,
+                                color = Color(0xFF1F2937),
+                                modifier = Modifier.weight(1f)
+                            )
+                            TextButton(
+                                onClick = {},
+                                contentPadding = PaddingValues(0.dp)
+                            ) {
+                                Text(
+                                    text = "Ver tudo",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = Color(0xFF2563EB)
+                                )
+                            }
+                        }
                         LazyRow(
                             contentPadding = PaddingValues(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -379,7 +424,7 @@ fun NewsScreenLayout(
                                     location = doc.fields.location.stringValue,
                                     date = doc.fields.date.stringValue,
                                     onClick = {
-                                        recentEventViewModel.onEventOpened(
+                                        viewModel.onEventOpened(
                                             EventEntity(
                                                 id = doc.id,
                                                 title = doc.fields.title.stringValue,
@@ -397,6 +442,53 @@ fun NewsScreenLayout(
                                         navController.navigate("newsDetailsScreen/${doc.id}")
                                     }
                                 )
+                            }
+                        }
+                    }
+                    item {
+                        if (recentEvents.isNotEmpty()) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 18.dp)
+                                    .padding(top = 18.dp, bottom = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Visto recentemente",
+                                    fontFamily = permanentMarker,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 22.sp,
+                                    color = Color(0xFF1F2937),
+                                    modifier = Modifier.weight(1f)
+                                )
+                                TextButton(
+                                    onClick = {},
+                                    contentPadding = PaddingValues(0.dp)
+                                ) {
+                                    Text(
+                                        text = "Ver tudo",
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = Color(0xFF2563EB)
+                                    )
+                                }
+                            }
+                            LazyRow(
+                                contentPadding = PaddingValues(horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(uiState.events) { doc ->
+                                    EventCard(
+                                        imageUrl = doc.fields.img.stringValue,
+                                        title = doc.fields.title.stringValue,
+                                        location = doc.fields.location.stringValue,
+                                        date = doc.fields.date.stringValue,
+                                        onClick = {
+                                            navController.navigate("newsDetailsScreen/${doc.id}")
+                                        }
+                                    )
+                                }
                             }
                         }
                     }

@@ -20,6 +20,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 
 @Composable
+fun CaririFestApp() {
+    AppNavigation()
+}
+@Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()

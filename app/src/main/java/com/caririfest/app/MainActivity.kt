@@ -4,9 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
 import androidx.core.app.NotificationManagerCompat
-import com.caririfest.app.navigation.AppNavigation
+import com.caririfest.app.navigation.CaririFestApp
 import com.caririfest.app.ui.theme.CaririFestTheme
 import com.caririfest.app.workmanager.NOTIFICATION_ID
 import com.caririfest.app.workmanager.requestNotificationPermission
@@ -24,9 +23,4 @@ class MainActivity : ComponentActivity() {
         NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID)
         setContent { CaririFestTheme { CaririFestApp() } }
     }
-}
-
-@Composable
-fun CaririFestApp() {
-    AppNavigation()
 }

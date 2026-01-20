@@ -8,7 +8,6 @@ import com.caririfest.data.datasource.dao.EventDao
 import com.caririfest.data.datasource.dao.RecentEventDao
 import com.caririfest.data.datasource.database.AppDatabase
 import com.caririfest.data.datasource.repository.EventsRepository
-import com.caririfest.data.datasource.repository.RecentEventsRepository
 import com.caririfest.network.data.EventsApi
 import com.caririfest.network.data.EventsApiService
 import com.mapbox.common.MapboxOptions.accessToken
@@ -74,16 +73,9 @@ object AppModule {
     @Singleton
     fun provideEventsRepository(
         api: EventsApiService,
-        eventDao: EventDao
-    ): EventsRepository = EventsRepository(api, eventDao)
-
-    @Provides
-    @Singleton
-    fun provideRecentEventsRepository(
         eventDao: EventDao,
         recentEventDao: RecentEventDao
-    ): RecentEventsRepository = RecentEventsRepository(eventDao, recentEventDao)
-
+    ): EventsRepository = EventsRepository(api, eventDao, recentEventDao)
 
 
     private const val BASE_URL = "http://10.0.2.2:8080/payment/"

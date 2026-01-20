@@ -35,7 +35,6 @@ import androidx.navigation.compose.rememberNavController
 import com.caririfest.app.navigation.BottomNavigationBar
 import com.caririfest.app.navigation.NavItems
 import com.caririfest.app.navigation.NavigationGraph
-import com.caririfest.app.ui.components.CategoryCard
 import com.caririfest.app.ui.components.EventCard
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -80,15 +79,9 @@ fun HomeScreen() {
 fun HomeScreenLayout(
     navController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel(),
-    recentViewModel: RecentEventViewModel = hiltViewModel()
 ) {
     val cityLocation by viewModel.cityLocation.collectAsStateWithLifecycle()
-    val categoriesState by viewModel.categories.collectAsStateWithLifecycle()
-    val recentEvents by recentViewModel.recentEvents.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        recentViewModel.loadEvents()
-    }
 
     LazyColumn(
         modifier = Modifier
@@ -111,75 +104,6 @@ fun HomeScreenLayout(
                         },
                         cardEnable = false
                     )
-                }
-            }
-        }
-        item {
-            Spacer(modifier = Modifier.padding(16.dp))
-            Text(
-                text = "Explore as categorias",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp),
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                fontSize = 26.sp,
-                color = Color.Black
-            )
-
-            //categories
-            LazyRow(
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(categoriesState) { value ->
-                    CategoryCard(
-                        icon = value.image,
-                        title = value.nameCategories
-                    )
-                }
-            }
-        }
-
-        item {
-            if (recentEvents.isNotEmpty()) {
-                Spacer(
-                    modifier = Modifier.padding(
-                        top = 24.dp,
-                        bottom = 18.dp,
-                        start = 16.dp,
-                        end = 16.dp,
-                    )
-                )
-                Text(
-                    text = "Visto recentemente",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
-                    fontSize = 26.sp,
-                    color = Color.Black
-                )
-
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = 12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(recentEvents.reversed()) { recentEvents ->
-                        EventCard(
-                            cardElevation = CardDefaults.cardElevation(0.dp),
-                            imageUrl = recentEvents.img,
-                            title = recentEvents.title,
-                            location = recentEvents.location,
-                            date = recentEvents.date,
-                            onClick = {
-                                navController.navigate("newsDetailsScreen/${recentEvents.id}")
-                            }
-                        )
-                    }
                 }
             }
         }

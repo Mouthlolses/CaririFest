@@ -12,12 +12,9 @@ class HomeViewModel : ViewModel() {
     private val _cityLocation = MutableStateFlow<List<CityLocation>>(emptyList())
     val cityLocation: StateFlow<List<CityLocation>> = _cityLocation.asStateFlow()
 
-    private val _categories = MutableStateFlow<List<Categories>>(emptyList())
-    val categories: StateFlow<List<Categories>> = _categories.asStateFlow()
 
     init {
         loadCards()
-        loadCategories()
     }
 
     private fun loadCards() {
@@ -84,53 +81,6 @@ class HomeViewModel : ViewModel() {
             ),
         )
     }
-
-
-    private fun loadCategories() {
-        _categories.value = listOf(
-            Categories(
-                id = 1,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Cultura & Tradição"
-            ),
-            Categories(
-                id = 2,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Música & Entretenimento"
-            ),
-            Categories(
-                id = 3,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Gastronomia"
-            ),
-            Categories(
-                id = 4,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Esporte & Bem-Estar"
-            ),
-            Categories(
-                id = 5,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Educação & Negócios"
-            ),
-            Categories(
-                id = 6,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Família & Comunidade"
-            ),
-            Categories(
-                id = 7,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Cinema & Arte"
-            ),
-            Categories(
-                id = 8,
-                image = R.drawable.caririfestlogo1,
-                nameCategories = "Turismo & Natureza"
-            )
-        )
-    }
-
 }
 
 data class CityLocation(
@@ -139,10 +89,4 @@ data class CityLocation(
     val futureImpl: String = "",
     val url: String,
     @param:DrawableRes val img: Int
-)
-
-data class Categories(
-    val id: Int,
-    @param:DrawableRes val image: Int,
-    val nameCategories: String = ""
 )

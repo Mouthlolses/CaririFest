@@ -2,7 +2,9 @@ package com.caririfest.data.datasource.repository
 
 import android.util.Log
 import com.caririfest.data.datasource.dao.EventDao
+import com.caririfest.data.datasource.dao.RecentEventDao
 import com.caririfest.data.datasource.model.EventEntity
+import com.caririfest.data.datasource.model.RecentEventEntity
 import com.caririfest.data.datasource.model.toEventEntity
 import com.caririfest.network.data.EventsApi
 import com.caririfest.network.data.EventsApiService
@@ -13,7 +15,8 @@ import kotlinx.coroutines.flow.onStart
 
 class EventsRepository(
     private val api: EventsApiService = EventsApi.retrofitService,
-    private val eventDao: EventDao
+    private val eventDao: EventDao,
+    private val recentEventDao: RecentEventDao
 ) {
 
     fun getEventsFlow(): Flow<List<EventEntity>> = eventDao.getAllEvents()
@@ -23,7 +26,6 @@ class EventsRepository(
         .catch { e ->
             throw e
         }
-
 
     private suspend fun refreshEventsIfNeeded() {
         try {
@@ -52,4 +54,19 @@ class EventsRepository(
     }
 
     suspend fun refreshEvents() = refreshEventsIfNeeded()
+
+
+    suspend fun markAsViewed(event: EventEntity) {
+        recentEventDao.addRecentEvent(
+            RecentEventEntity(eventId = event.id)
+        )
+    }
+
+    suspend fun getRecentlyViewedEvents(limit: Int = 20): List<EventEntity> {
+        val recent = recentEventDao.getRecentEvents(limit)
+        val ids = recent.map { it.eventId }
+
+        return eventDao.getEventById(ids)
+            .sortedByDescending { e -> recent.indexOfFirst { it.eventId == e.id } }
+    }
 }
