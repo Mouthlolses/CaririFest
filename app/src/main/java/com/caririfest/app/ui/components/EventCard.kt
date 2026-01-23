@@ -66,7 +66,10 @@ fun EventCard(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(strokeWidth = 2.dp)
+                        CircularProgressIndicator(
+                            strokeWidth = 2.dp,
+                            color = Color(0xFFFF9800)
+                        )
                     }
                 },
                 error = {

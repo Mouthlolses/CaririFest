@@ -87,6 +87,7 @@ fun OnBoardingScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFFFFEA00))
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
@@ -185,14 +186,14 @@ fun OnBoardingScreeLayout(
         Card(
             modifier = Modifier
                 .padding(horizontal = 18.dp)
-                .padding(top = 12.dp ,bottom = 150.dp)
+                .padding(top = 12.dp, bottom = 150.dp)
                 .offset(y = (-1).dp),
             shape = RoundedCornerShape(24.dp),
             colors = CardDefaults.cardColors(
                 Color(0xFFFDF4EE)
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),
-            border = BorderStroke(1.dp,Color.Gray.copy(alpha = 0.35f))
+            border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.35f))
         ) {
             Column(
                 modifier = Modifier
