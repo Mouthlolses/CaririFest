@@ -245,7 +245,7 @@ fun NewsScreenLayout(
                                         Modifier
                                             .fillMaxWidth()
                                             .background(Color.White)
-                                            .padding(bottom = 16.dp),
+                                            .padding(bottom = 12.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
                                         SubcomposeAsyncImage(
@@ -253,8 +253,8 @@ fun NewsScreenLayout(
                                             contentDescription = stringResource(R.string.imageEvents),
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .height(200.dp)
-                                                .clip(RoundedCornerShape(16.dp)),
+                                                .height(204.dp)
+                                                .clip(RoundedCornerShape(26.dp)),
                                             contentScale = ContentScale.Crop,
                                             loading = {
                                                 Box(
@@ -344,7 +344,6 @@ fun NewsScreenLayout(
                         }
                     }
                     item {
-                        Spacer(modifier = Modifier.padding(vertical = 4.dp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -463,7 +462,7 @@ fun NewsScreenLayout(
                                     modifier = Modifier.weight(1f)
                                 )
                                 TextButton(
-                                    onClick = {},
+                                    onClick = { },
                                     contentPadding = PaddingValues(0.dp)
                                 ) {
                                     Text(
@@ -478,12 +477,12 @@ fun NewsScreenLayout(
                                 contentPadding = PaddingValues(horizontal = 16.dp),
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
-                                items(uiState.events) { doc ->
+                                items(recentEvents) { doc ->
                                     EventCard(
-                                        imageUrl = doc.fields.img.stringValue,
-                                        title = doc.fields.title.stringValue,
-                                        location = doc.fields.location.stringValue,
-                                        date = doc.fields.date.stringValue,
+                                        imageUrl = doc.img,
+                                        title = doc.title,
+                                        location = doc.location,
+                                        date = doc.date,
                                         onClick = {
                                             navController.navigate("newsDetailsScreen/${doc.id}")
                                         }

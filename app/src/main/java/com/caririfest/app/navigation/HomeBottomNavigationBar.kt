@@ -1,19 +1,24 @@
 package com.caririfest.app.navigation
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Explore
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Map
+import androidx.compose.material.icons.rounded.Preview
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -27,11 +32,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -40,7 +43,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.caririfest.app.R
-import com.caririfest.app.font.poppinsFamily
 import com.caririfest.app.payment.stripe.ui.CheckoutScreen
 import com.caririfest.app.payment.stripe.ui.CheckoutViewModel
 import com.caririfest.app.ui.components.LoadingIndicatorLayout
@@ -59,18 +61,18 @@ import com.stripe.android.paymentsheet.rememberPaymentSheet
 data class BottomNavItem(
     val route: String,
     val label: String,
-    val icon: Int
+    val icon: ImageVector
 )
 
 enum class NavItems(
     @param:StringRes val title: Int,
-    val icon: Int,
+    val icon: ImageVector,
     val route: String
 ) {
-    NEWS(R.string.news, R.drawable.icon_bold_celebration, "news"),
-    HOME(R.string.home, R.drawable.icon_myhome, "home"),
-    SEARCH(R.string.search, R.drawable.icon_my_map, "search"),
-    OFFER(R.string.favorites, R.drawable.icon_world, "offer")
+    NEWS(R.string.news, Icons.Rounded.Home, "news"),
+    HOME(R.string.home, Icons.Rounded.Preview, "home"),
+    SEARCH(R.string.search, Icons.Rounded.Map, "search"),
+    OFFER(R.string.favorites, Icons.Rounded.Explore, "offer")
 
 }
 
@@ -206,73 +208,60 @@ fun BottomNavigationBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar(
+    Box(
         modifier = Modifier
-            .height(96.dp)
-            .padding(bottom = 28.dp)
-            .clip(RoundedCornerShape(36.dp))
-            .shadow(
-                elevation = 12.dp,
-                shape = RoundedCornerShape(36.dp),
-                ambientColor = Color(0xFF8C4A2F).copy(alpha = 0.25f),
-                spotColor = Color(0xFF8C4A2F).copy(alpha = 0.25f)
-            )
-            .border(
-                width = 1.dp,
-                color = Color.DarkGray,
-                shape = RoundedCornerShape(36.dp)
-            ),
-        tonalElevation = 16.dp,
-        containerColor = Color.White
-
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        contentAlignment = Alignment.BottomCenter
     ) {
-        items.forEach { item ->
-            val selected = currentRoute == item.route
-
-            NavigationBarItem(
-                selected = selected,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                icon = {
-                    Icon(
-                        painter = painterResource(id = item.icon),
-                        contentDescription = item.label,
-                        modifier = Modifier.size(24.dp)
-                    )
-                },
-                label = {
-                    AnimatedContent(
-                        targetState = selected,
-                        transitionSpec = {
-                            fadeIn(animationSpec = tween(200)) togetherWith
-                                    fadeOut(animationSpec = tween(200))
-                        }, label = ""
-                    ) {
-                        if (!it) {
-                            Text(
-                                item.label,
-                                fontFamily = poppinsFamily,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 12.sp
-                            )
-                        }
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFFFF9800),
-                    selectedTextColor = Color.Black,
-                    unselectedIconColor = Color.Black,
-                    unselectedTextColor = Color.Black,
-                    indicatorColor = Color(0xFFFF9800).copy(alpha = 0.2f)
+        NavigationBar(
+            modifier = Modifier
+                .height(72.dp)
+                .clip(RoundedCornerShape(36.dp))
+                .shadow(
+                    elevation = 20.dp,
+                    shape = RoundedCornerShape(36.dp),
+                    spotColor = Color.Black.copy(alpha = 0.6f)
                 )
-            )
+                .background(Color(0xFF2B2939).copy(alpha = 0.95f))
+                .border(
+                    width = 1.dp,
+                    color = Color.White.copy(alpha = 0.08f),
+                    shape = RoundedCornerShape(36.dp)
+                ),
+            containerColor = Color.Transparent,
+            tonalElevation = 0.dp
+        ) {
+
+            items.forEach { item ->
+                val selected = currentRoute == item.route
+
+                NavigationBarItem(
+                    selected = selected,
+                    onClick = {
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.label,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    },
+                    label = {}, // igual ao layout novo (sem texto)
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color.White,
+                        unselectedIconColor = Color.White.copy(alpha = 0.4f),
+                        indicatorColor = Color(0xFFFF9800)
+                    )
+                )
+            }
         }
     }
 }

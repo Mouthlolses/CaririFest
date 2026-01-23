@@ -12,5 +12,8 @@
     <color name="principal_color">#E37400</color>
     <color name="second_color">#FBBC04</color>
 
+    <color name="splash_background">#FFEA00</color>
+
+
 
 </resources>

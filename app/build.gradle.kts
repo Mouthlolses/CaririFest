@@ -94,6 +94,7 @@ dependencies {
     //GCMNetworkManager support
     implementation(libs.androidx.work.gcm)
     implementation(libs.places)
+    implementation(libs.androidx.compose.foundation)
 
     // optional - Test helpers
     androidTestImplementation(libs.androidx.work.testing)

@@ -42,7 +42,7 @@ fun EventCard(
     date: String = "12/12/1999",
     onClick: () -> Unit = {}
 ) {
-    val cardWidth = 260.dp
+    val cardWidth = 280.dp
     val imageRatio = 16f / 9f
 
     Card(

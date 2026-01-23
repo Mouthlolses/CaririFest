@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +55,8 @@ fun SplashScreen() {
 
     Box(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(Color(0xFFFFEA00)),
         contentAlignment = Alignment.Center
     ) {
         AnimatedVisibility(
@@ -61,7 +64,9 @@ fun SplashScreen() {
             enter = fadeIn(animationSpec = tween(1000)) +
                     scaleIn(
                         initialScale = 0.5f,
-                        animationSpec = tween(1000, easing = { OvershootInterpolator(2f).getInterpolation(it) })
+                        animationSpec = tween(
+                            1000,
+                            easing = { OvershootInterpolator(2f).getInterpolation(it) })
                     ),
             exit = fadeOut()
         ) {

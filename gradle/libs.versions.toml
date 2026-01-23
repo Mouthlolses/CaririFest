@@ -42,6 +42,7 @@ stripeAndroid = "22.6.0"
 abacatepayKotlinSdk = "0.0.5"
 workRuntimeKtx = "2.11.0"
 places = "5.1.1"
+foundationVersion = "1.10.1"
 
 [libraries]
 abacatepay-kotlin-sdk = { module = "com.github.abacatepay:abacatepay-kotlin-sdk", version.ref = "abacatepayKotlinSdk" }
@@ -103,6 +104,7 @@ retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
 androidx-compose-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite" }
 stripe-android = { module = "com.stripe:stripe-android", version.ref = "stripeAndroid" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundationVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.App_jnproject" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.App_jnproject" parent="android:Theme.Material.Light.NoActionBar" >
+
+        <!-- FUNDO DA SPLASH -->
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+    </style>
 </resources>
